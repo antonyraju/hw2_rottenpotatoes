@@ -7,7 +7,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @movies = Movie.scoped
+    @movies = @movies.order('title') if params['sort'] == 'title'
+    @movies = @movies.order('release_date') if params['sort'] == 'release_date'
   end
 
   def new
@@ -38,4 +40,5 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  
 end
